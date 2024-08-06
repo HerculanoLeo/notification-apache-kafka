@@ -1,0 +1,42 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: email-sender
+  kafka:
+    client-id: email-sender
+    consumer:
+      max-poll-records: 500
+      group-id: email-sender
+      auto-offset-reset: earliest
+    admin:
+      auto-create: true
+    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail.smtp:
+        auth: true
+        starttls:
+          enable: false
+          required: false
+        ssl:
+          enable: true
+        socketFactory:
+          class: javax.net.ssl.SSLSocketFactory
+          fallback: false
+          port: 465
+
+email:
+  enabled: false
+  from: ${GMAIL_USERNAME}
+  personal-name: "Apache Kafka [TEST]"
+
+logging:
+  level:
+    org.springframework.r2dbc: DEBUG

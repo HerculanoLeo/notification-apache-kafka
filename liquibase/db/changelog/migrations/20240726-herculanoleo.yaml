@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202407261600-create-notification-table
+      author: herculanoleo
+      changes:
+        - createTable:
+            tableName: tb_notification
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: 'uuid_generate_v4()'
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: PK_notification
+                    nullable: false
+              - column:
+                  name: subject
+                  type: 'varchar(255)'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recipient
+                  type: 'varchar(255)'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: 'TIMESTAMP WITH TIME ZONE'
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sent_at
+                  type: 'TIMESTAMP WITH TIME ZONE'
+                  constraints:
+                    nullable: true
+              - column:
+                  name: type
+                  type: CHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: CHAR
+                  defaultValue: 'R'
+                  constraints:
+                    nullable: false

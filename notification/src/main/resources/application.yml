@@ -1,0 +1,22 @@
+server:
+    port: 9000
+
+spring:
+    application:
+        name: notification
+    r2dbc:
+        url: r2dbc:postgresql://10.0.0.13:5432/db_kafka_notification
+        username: develop
+        password: 123
+    kafka:
+        client-id: 'notification'
+        consumer:
+            max-poll-records: 500
+            group-id: 'notification'
+            auto-offset-reset: earliest
+        admin:
+            auto-create: true
+        bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+logging:
+    level:
+      org.springframework.r2dbc: DEBUG
