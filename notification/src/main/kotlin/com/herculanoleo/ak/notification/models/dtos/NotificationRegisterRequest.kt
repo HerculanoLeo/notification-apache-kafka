@@ -1,28 +1,16 @@
 package com.herculanoleo.ak.notification.models.dtos
 
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotNull
+
 data class NotificationRegisterRequest(
-    val subject: String,
-    val content: String,
-    val recipient: Array<String>,
-    val type: String,
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as NotificationRegisterRequest
-
-        if (subject != other.subject) return false
-        if (content != other.content) return false
-        if (!recipient.contentEquals(other.recipient)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = subject.hashCode()
-        result = 31 * result + content.hashCode()
-        result = 31 * result + recipient.contentHashCode()
-        return result
-    }
-}
+    @field:NotBlank
+    val subject: String?,
+    @field:NotBlank
+    val content: String?,
+    @field:NotNull @field:NotEmpty
+    val recipient: List<String>?,
+    @field:NotBlank
+    val type: String?,
+)

@@ -2,7 +2,11 @@ package com.herculanoleo.ak.notification.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.herculanoleo.ak.notification.models.constants.KAFKA_NOTIFICATION_RESULT_TOPIC
-import com.herculanoleo.ak.notification.models.dtos.*
+import com.herculanoleo.ak.notification.models.dtos.NotificationRegisterRequest
+import com.herculanoleo.ak.notification.models.dtos.NotificationRequest
+import com.herculanoleo.ak.notification.models.dtos.NotificationUpdateRequest
+import com.herculanoleo.ak.notification.models.dtos.SendEmailRequest
+import com.herculanoleo.ak.notification.models.exceptions.NotFoundException
 import com.herculanoleo.ak.notification.models.mappers.NotificationMapper
 import com.herculanoleo.ak.notification.persistence.entities.Notification
 import com.herculanoleo.ak.notification.persistence.repositories.NotificationRepository
@@ -20,22 +24,22 @@ class NotificationService(
     private val emailSenderService: EmailSenderService,
     private val objectMapper: ObjectMapper
 ) {
-
     fun findAll(requestEntity: NotificationRequest) = Flux.just(requestEntity)
         .flatMap { repository.findAll() }
         .map { mapper.map(it) }
 
     fun findById(id: UUID) = Mono.just(id)
         .flatMap { repository.findById(it) }
+        .switchIfEmpty(Mono.error(NotFoundException("Not found")))
         .map { mapper.map(it) }
 
     fun register(requestEntity: NotificationRegisterRequest) = Mono.just(requestEntity)
         .map {
             Notification(
-                it.subject,
-                it.content,
-                it.recipient.joinToString(";"),
-                it.type,
+                it.subject!!,
+                it.content!!,
+                it.recipient!!.joinToString(";"),
+                it.type!!,
                 "R"
             )
         }
@@ -57,24 +61,23 @@ class NotificationService(
 
     fun update(id: UUID, requestEntity: NotificationUpdateRequest) = Mono.just(id)
         .flatMap { repository.findById(it) }
-        .map {
+        .flatMap {
             it.status = requestEntity.status
             it.sentAt = requestEntity.sentAt
-            it
+            repository.save(it)
         }
-        .flatMap { repository.save(it) }
         .map { mapper.map(it) }
 
     @KafkaListener(topics = [KAFKA_NOTIFICATION_RESULT_TOPIC])
     fun notificationResultListener(record: ConsumerRecord<String, String>) {
-        val id = record.key()
-        val value = record.value()
-
-        Mono.just(value)
-            .map { objectMapper.readValue(it, NotificationUpdateRequest::class.java) }
+        Mono.just(record)
             .flatMap {
-                this.update(UUID.fromString(id), it)
-            }.subscribe()
+                val id = UUID.fromString(record.key())
+                val value = record.value()
+                val requestEntity = objectMapper.readValue(value, NotificationUpdateRequest::class.java)
+                this.update(id, requestEntity)
+            }
+            .subscribe()
     }
 
 }
