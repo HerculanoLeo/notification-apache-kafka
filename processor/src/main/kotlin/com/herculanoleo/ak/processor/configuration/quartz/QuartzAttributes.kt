@@ -7,8 +7,9 @@ import org.springframework.context.annotation.Configuration
 @ConfigurationProperties(prefix = "app.quartz")
 data class QuartzAttributes(
     var cron: Cron = Cron(),
-)
+) {
 
-data class Cron(
-    var notificationResend: String = "0 0/1 * * * ?"
-)
+    data class Cron(
+        var notificationResend: String = "0 0/1 * * * ?"
+    )
+}

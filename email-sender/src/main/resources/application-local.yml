@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9001
 
 spring:
   application:
@@ -12,12 +12,12 @@ spring:
       auto-offset-reset: earliest
     admin:
       auto-create: true
-    bootstrap-servers: ${EMAIL_SENDER_KAFKA_HOSTS}
+    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
   data:
     redis:
-      host: ${EMAIL_SENDER_REDIS_HOST}
-      port: ${EMAIL_SENDER_REDIS_PORT}
-      password: ${EMAIL_SENDER_REDIS_PASSWORD}
+      host: localhost
+      port: 6379
+      password: 1234
   mail:
     host: smtp.gmail.com
     port: 465
@@ -38,9 +38,9 @@ spring:
           port: 465
 
 email:
-  enabled: ${EMAIL_SENDER_SEND_EMAIL_ENABLE}
+  enabled: true
   from: ${GMAIL_USERNAME}
-  personal-name: ${GMAIL_PERSONAL_NAME}
+  personal-name: "Apache Kafka [TEST]"
 
 logging:
   level:

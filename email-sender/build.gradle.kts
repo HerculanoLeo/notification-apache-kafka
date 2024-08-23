@@ -55,3 +55,9 @@ kotlin {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.bootJar {
+    manifest {
+        archiveFileName.set("app.jar")
+    }
+}

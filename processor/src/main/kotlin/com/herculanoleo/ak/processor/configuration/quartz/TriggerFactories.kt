@@ -19,6 +19,8 @@ class TriggerFactories {
         val trigger = CronTriggerFactoryBean()
         trigger.setJobDetail(job)
         trigger.setCronExpression(cron)
+        trigger.setName("${job.jobClass.simpleName}Trigger")
+        trigger.setGroup("notification")
         return trigger
     }
 }

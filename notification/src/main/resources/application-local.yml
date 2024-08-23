@@ -1,15 +1,13 @@
 server:
-  port: 8080
+  port: 9000
 
 spring:
   application:
     name: notification
-  profiles:
-    active: ${ENVIRONMENT}
   r2dbc:
-    url: r2dbc:postgresql://${NOTIFICATION_DB_URL}/${NOTIFICATION_DB_DATABASE_NAME}
-    username: ${NOTIFICATION_DB_USERNAME}
-    password: ${NOTIFICATION_DB_PASSWORD}
+    url: r2dbc:postgresql://10.0.0.13:5432/db_kafka_notification
+    username: develop
+    password: 123
   kafka:
     client-id: 'notification'
     consumer:
@@ -18,7 +16,7 @@ spring:
       auto-offset-reset: earliest
     admin:
       auto-create: true
-    bootstrap-servers: ${NOTIFICATION_KAFKA_HOSTS}
+    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
 logging:
   level:
     org.springframework.r2dbc: DEBUG

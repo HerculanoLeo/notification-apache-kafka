@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9003
 
 spring:
   application:
@@ -14,9 +14,9 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:postgresql://${PROCESSOR_DB_HOST}/${PROCESSOR_DB_DATABASE_NAME}
-    username: ${PROCESSOR_DB_USERNAME}
-    password: ${PROCESSOR_DB_PASSWORD}
+    url: jdbc:postgresql://10.0.0.13:5432/db_quartz_jobs
+    username: liquibase
+    password: liquibase123
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   quartz:
@@ -29,6 +29,6 @@ spring:
 app:
   quartz:
     cron:
-      notification-resend: ${PROCESSOR_CRON_NOTIFICATION_RESEND}
+      notification-resend: 0 0/10 * * * ?
   notification:
-    url: ${PROCESSOR_NOTIFICATION_API_URL}
+    url: http://localhost:9000

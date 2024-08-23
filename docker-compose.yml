@@ -1,0 +1,49 @@
+services:
+  notification-1:
+    image: herculanoleo/notification:latest
+    container_name: notification-1
+    env_file:
+      - ./.env
+    hostname: notification-1
+    ports:
+      - '9000:8080'
+    networks:
+      - common
+  notification-2:
+    image: herculanoleo/notification:latest
+    container_name: notification-2
+    env_file:
+      - ./.env
+    hostname: notification-2
+    ports:
+      - '9001:8080'
+    networks:
+      - common
+  email-sender-1:
+    image: herculanoleo/email-sender:latest
+    container_name: email-sender-1
+    env_file:
+      - ./.env
+    hostname: email-sender-1
+    networks:
+      - common
+  email-sender-2:
+    image: herculanoleo/email-sender:latest
+    container_name: email-sender-2
+    env_file:
+      - ./.env
+    hostname: email-sender-2
+    networks:
+      - common
+  processor-1:
+    image: herculanoleo/processor:latest
+    container_name: processor-1
+    env_file:
+      - ./.env
+    hostname: processor-1
+    networks:
+      - common
+
+networks:
+  common:
+    external: true

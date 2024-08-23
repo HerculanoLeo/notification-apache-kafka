@@ -18,6 +18,8 @@ class JobDetailsFactories {
         val jobDetailFactory = JobDetailFactoryBean()
         jobDetailFactory.setJobClass(clazz.java)
         jobDetailFactory.setDurability(true)
+        jobDetailFactory.setName("${clazz.simpleName}DetailFactory")
+        jobDetailFactory.setGroup("notification")
         return jobDetailFactory
     }
 }
