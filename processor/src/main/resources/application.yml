@@ -1,0 +1,33 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: processor
+  jpa:
+    database: postgresql
+    generate-ddl: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://10.0.0.13:5432/db_quartz_jobs
+    username: liquibase
+    password: liquibase123
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  quartz:
+    job-store-type: jdbc
+    properties:
+      org:
+        quartz:
+          jobStore:
+            driverDelegateClass: 'org.quartz.impl.jdbcjobstore.PostgreSQLDelegate'
+app:
+  quartz:
+    cron: 0 0/5 * * * ?
+  notification:
+    url: http://localhost:9000

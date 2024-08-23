@@ -19,6 +19,7 @@ data class Notification(
     @Column("sent_at")
     var sentAt: OffsetDateTime?,
     var type: String,
+    var attempt: Int,
     var status: String,
 ) {
     constructor(
@@ -27,5 +28,5 @@ data class Notification(
         recipient: String,
         type: String,
         status: String,
-    ) : this(null, subject, content, recipient, OffsetDateTime.now(), null, type, status)
+    ) : this(null, subject, content, recipient, OffsetDateTime.now(), null, type, 0, status)
 }

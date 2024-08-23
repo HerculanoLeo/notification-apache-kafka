@@ -13,6 +13,11 @@ spring:
     admin:
       auto-create: true
     bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 1234
   mail:
     host: smtp.gmail.com
     port: 465
@@ -33,7 +38,7 @@ spring:
           port: 465
 
 email:
-  enabled: false
+  enabled: true
   from: ${GMAIL_USERNAME}
   personal-name: "Apache Kafka [TEST]"
 

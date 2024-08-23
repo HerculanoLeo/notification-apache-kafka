@@ -1,10 +1,10 @@
-package com.herculanoleo.ak.notification.models.dtos
+package com.herculanoleo.ak.processor.models.dtos
 
 import java.time.OffsetDateTime
-import java.util.*
+import java.util.UUID
 
 data class NotificationResponse(
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID,
     val subject: String,
     val content: String,
     val recipient: List<String>,

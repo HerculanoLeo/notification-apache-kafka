@@ -1,4 +1,4 @@
-package com.herculanoleo.ak.notification.models.dtos
+package com.herculanoleo.ak.processor.models.dtos
 
 data class NotificationRequest(
     val email: String?,

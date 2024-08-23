@@ -16,6 +16,7 @@ class NotificationMapper {
             entityToMap.createdAt,
             entityToMap.sentAt,
             entityToMap.type,
+            entityToMap.attempt,
             entityToMap.status
         )
     }

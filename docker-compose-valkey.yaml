@@ -1,0 +1,25 @@
+services:
+  valkey:
+    image: bitnami/valkey:7.2
+    container_name: valkey
+    env_file:
+      - ./.env
+    ports:
+      - "6379:6379"
+    hostname: valkey
+    networks:
+      - common
+    volumes:
+      - './volumes/valkey/valkey-persistence:/bitnami/valkey/data'
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: '8gb'
+        reservations:
+          cpus: '2'
+          memory: '4gb'
+
+networks:
+  common:
+    external: true

@@ -25,4 +25,8 @@ class NotificationController(private val service: NotificationService) {
         .status(HttpStatus.CREATED)
         .body(service.register(requestEntity))
 
+    @PutMapping("{id}/resend")
+    fun resend(@PathVariable id: UUID) = ResponseEntity.status(HttpStatus.ACCEPTED)
+        .body(this.service.resend(id))
+
 }

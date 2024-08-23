@@ -47,6 +47,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: attempt
+                  type: Int
+                  constraints:
+                    nullable: false
+                  defaultValue: '0'
+              - column:
                   name: status
                   type: CHAR
                   defaultValue: 'R'
