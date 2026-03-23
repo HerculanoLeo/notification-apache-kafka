@@ -54,22 +54,5 @@ Pelo fato do sistema estar componentizado, os serviços implementam bibliotecas 
   * **Spring Kafka**: Listeners e consumidores dos tópicos de notificação.
   * **Spring Data Redis Reactive**: Armazenamento ágil de chaves para evitar duplicação no envio das mensagens.
 
-## 🐳 Como Executar Localmente
-O projeto já conta com o ambiente pré-configurado para que toda a infraestrutura e microsserviços rodem localmente:
-
-1. Renomeie ou copie o arquivo `.env.exemple` para `.env` ajustando as credenciais e as configurações de ambiente caso deseje.
-   ```bash
-   cp .env.exemple .env
-   ```
-2. Renomeie o construtor do liquibase também `liquibase.properties.exemple` para `liquibase.properties`:
-   ```bash
-   cp liquibase/liquibase.properties.exemple liquibase/liquibase.properties
-   ```
-3. Suba o ecossistema com os containers em *background*:
-   ```bash
-   docker-compose up -d
-   ```
-> **Aviso**: Certifique-se de ter suas portas (`9000`, `9001`, Kafka, PostgreSQL) livres na máquina local e verifique os logs via `docker-compose logs -f` para assegurar que os containers estão saudáveis.
-
 ---
 *Esse repositório serve a um propósito de portfólio demonstrativo, destacando a combinação, controle de idempotência e desafios arquiteturais envolvendo Kafka, Redis, mensageria distribuída e o ecossistema reativo/moderno fornecido por Spring Boot com Kotlin.*
